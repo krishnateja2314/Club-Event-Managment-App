@@ -1,7 +1,11 @@
 import React from "react";
 
-const Test = () => {
-  return <div>hello</div>;
-};
+interface props {
+  text: string;
+}
+
+function Test({ text }: props) {
+  return <div>{text}</div>;
+}
 
 export default Test;

@@ -1,105 +1,193 @@
-import React, { useState, useEffect } from "react";
-import change_to_login from "./login";
-import change_to_sign_up from "./login";
-import hidden_login_and_sign_up from "./login";
+import React, { useState } from "react";
 import "./login.css";
-const Login = () => {
-  function onClickchange_to_login() {
-    change_to_login();
-  }
-  function onClickchange_to_sign_up() {
-    change_to_sign_up();
-  }
-  function onClickhidden_login_and_sign_up() {
-    hidden_login_and_sign_up();
-  }
+import axios from "axios";
+const Login: React.FC = () => {
+  const [activeForm, setActiveForm] = useState<string>("");
+
+  const time_to_show_login = 400;
+  const time_to_hidden_login = 200;
+  const time_to_show_sign_up = 100;
+  const time_to_hidden_sign_up = 400;
+  const time_to_hidden_all = 500;
+
+  const change_to_login = () => {
+    setActiveForm("login");
+    setTimeout(() => {
+      const loginForm = document.querySelector(
+        ".cont_form_login"
+      ) as HTMLElement;
+      if (loginForm) loginForm.style.opacity = "1";
+    }, time_to_show_login);
+    setTimeout(() => {
+      const signUpForm = document.querySelector(
+        ".cont_form_sign_up"
+      ) as HTMLElement;
+      if (signUpForm) signUpForm.style.display = "none";
+    }, time_to_hidden_login);
+  };
+
+  const change_to_sign_up = () => {
+    setActiveForm("sign_up");
+    setTimeout(() => {
+      const signUpForm = document.querySelector(
+        ".cont_form_sign_up"
+      ) as HTMLElement;
+      if (signUpForm) signUpForm.style.opacity = "1";
+    }, time_to_show_sign_up);
+
+    setTimeout(() => {
+      const loginForm = document.querySelector(
+        ".cont_form_login"
+      ) as HTMLElement;
+      if (loginForm) loginForm.style.display = "none";
+    }, time_to_hidden_sign_up);
+  };
+
+  const hidden_login_and_sign_up = () => {
+    setActiveForm("");
+    const signUpForm = document.querySelector(
+      ".cont_form_sign_up"
+    ) as HTMLElement;
+    const loginForm = document.querySelector(".cont_form_login") as HTMLElement;
+    if (signUpForm) signUpForm.style.opacity = "0";
+    if (loginForm) loginForm.style.opacity = "0";
+
+    setTimeout(() => {
+      if (signUpForm) signUpForm.style.display = "none";
+      if (loginForm) loginForm.style.display = "none";
+    }, time_to_hidden_all);
+  };
+
   return (
-    <>
-      <script src="login.js"></script>
-      <div className="cotn_principal">
-        <div className="cont_centrar">
-          <div className="cont_login">
-            <div className="cont_info_log_sign_up">
-              <div className="col_md_login">
-                <div className="cont_ba_opcitiy">
-                  <h2>LOGIN</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                  <button
-                    className="btn_login"
-                    onClick={onClickchange_to_login}
-                  >
-                    LOGIN
-                  </button>
-                </div>
-              </div>
-              <div className="col_md_sign_up">
-                <div className="cont_ba_opcitiy">
-                  <h2>SIGN UP</h2>
-
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-
-                  <button
-                    className="btn_sign_up"
-                    onClick={onClickchange_to_sign_up}
-                  >
-                    SIGN UP
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="cont_back_info">
-              <div className="cont_img_back_grey">
-                <img
-                  src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div className="cont_forms">
-              <div className="cont_img_back_">
-                <img
-                  src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d"
-                  alt=""
-                />
-              </div>
-              <div className="cont_form_login">
-                <a href="#" onClick={onClickhidden_login_and_sign_up}>
-                  <i className="material-icons">&#xE5C4;</i>
-                </a>
-                <h2>LOGIN</h2>
-                <input type="text" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button className="btn_login" onClick={onClickchange_to_login}>
+    <div className="cotn_principal">
+      <div className="cont_centrar">
+        <div className="cont_login">
+          <div className="cont_info_log_sign_up">
+            <div className="col_md_login">
+              <div className="cont_ba_opcitiy">
+                <h2 style={{ color: "black" }}>LOGIN</h2>
+                <p style={{ fontSize: 14 }}>
+                  Login and find out the exiting events happening in IIT
+                  Hyderabad
+                </p>
+                <button className="btn_login" onClick={change_to_login}>
                   LOGIN
                 </button>
               </div>
-
-              <div className="cont_form_sign_up">
-                <a href="#" onClick={onClickhidden_login_and_sign_up}>
-                  <i className="material-icons">&#xE5C4;</i>
-                </a>
-                <h2>SIGN UP</h2>
-                <input type="text" placeholder="Email" />
-                <input type="text" placeholder="User" />
-                <input type="password" placeholder="Password" />
-                <input type="password" placeholder="Confirm Password" />
-                <button
-                  className="btn_sign_up"
-                  onClick={onClickchange_to_sign_up}
-                >
+            </div>
+            <div className="col_md_sign_up">
+              <div className="cont_ba_opcitiy">
+                <h2 style={{ color: "black" }}>SIGN UP</h2>
+                <p style={{ fontSize: 14 }}>
+                  Sign up to stay connected with IIT Hyderabad
+                </p>
+                <button className="btn_sign_up" onClick={change_to_sign_up}>
                   SIGN UP
                 </button>
               </div>
             </div>
           </div>
+          <div className="cont_back_info">
+            <div className="cont_img_back_grey">
+              <img
+                src="https://analyticsindiamag.com/wp-content/uploads/2019/09/iit-hyd.jpg"
+                alt=""
+              />
+            </div>
+          </div>
+          <div
+            className={`cont_forms ${
+              activeForm === "login"
+                ? "cont_forms_active_login"
+                : activeForm === "sign_up"
+                ? "cont_forms_active_sign_up"
+                : ""
+            }`}
+          >
+            <div className="cont_img_back_">
+              <img
+                src="https://analyticsindiamag.com/wp-content/uploads/2019/09/iit-hyd.jpg"
+                alt=""
+              />
+            </div>
+            <div
+              className="cont_form_login"
+              style={{
+                display: activeForm === "login" ? "block" : "none",
+                opacity: activeForm === "login" ? "1" : "0",
+              }}
+            >
+              <a href="#" onClick={hidden_login_and_sign_up}>
+                <i className="material-icons">&#x2190;</i>
+              </a>
+              <h2>LOGIN</h2>
+              <input
+                type="email"
+                name="login_mail"
+                placeholder="Email"
+                required
+              />
+              <input
+                type="password"
+                name="login_password"
+                placeholder="Password"
+                required
+              />
+              <button
+                type="submit"
+                className="btn_login"
+                onClick={change_to_login}
+              >
+                LOGIN
+              </button>
+            </div>
+            <div
+              className="cont_form_sign_up"
+              style={{
+                display: activeForm === "sign_up" ? "block" : "none",
+                opacity: activeForm === "sign_up" ? "1" : "0",
+              }}
+            >
+              <a href="#" onClick={hidden_login_and_sign_up}>
+                <i className="material-icons">&#x2190;</i>
+              </a>
+              <h2>SIGN UP</h2>
+              <input
+                type="email"
+                name="signup_mail"
+                placeholder="Email"
+                required
+              />
+              <input
+                type="text"
+                name="signup_username"
+                placeholder="Username"
+                required
+              />
+              <input
+                type="password"
+                name="signup_password"
+                placeholder="Password"
+                required
+              />
+              <input
+                type="password"
+                name="signup_conform_password"
+                placeholder="Confirm Password"
+                required
+              />
+              <button
+                type="submit"
+                className="btn_sign_up"
+                onClick={change_to_sign_up}
+              >
+                SIGN UP
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
