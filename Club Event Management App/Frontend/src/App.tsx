@@ -1,17 +1,22 @@
-import Test from "./Components/test";
+import { useState } from "react";
+import Home from "./Components/Home";
 import Login from "./Components/login";
-import axios from "axios";
-import React, { useState } from "react";
-/* const [userdata, changedata] = useState(""); */
-var data_ = "";
-fetch("http://localhost:3000/data")
-  .then((Response) => Response.text())
-  .then((data) => (data_ = data));
 function App() {
+  const [Username, setUsername] = useState("");
+  const [closeLogin, setcloseLogin] = useState(false);
+  const close = () => {
+    console.log(Username);
+    setcloseLogin(true);
+  };
+
+  const onLogin = (data: string) => {
+    setUsername(data);
+  };
+
   return (
     <>
-      <Test text={data_} />
-      <Login />
+      {!closeLogin && <Login onLogin={onLogin} close={close} />}
+      {closeLogin && <Home>{Username}</Home>}
     </>
   );
 }
