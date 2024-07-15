@@ -2,7 +2,6 @@
 - Following is both frontend backend of the web app
 - Every this in this run on localhost except for mongo data base
 
-- 
 # Instructions
 - Make sure you have node installed
 - Open Club Event Management App in terminal run : `npm install`
@@ -12,6 +11,7 @@
 - Then open a new terminal in Club Event Management App then use : `cd Backend`
 - Now run : `npm devStart`
 - This start the backend server
-- Now to the webpage http://localhost:5173/
+- Now go to the webpage http://localhost:5173/
 
-   
+# Note
+- Backend database is taken care by the mogodb server. So this server maby be removed in future.   
